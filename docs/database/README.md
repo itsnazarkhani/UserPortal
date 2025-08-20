@@ -10,7 +10,7 @@
 موجودیت اصلی برنامه که از `IdentityUser` ارث‌بری می‌کند و شامل فیلدهای زیر است:
 
 ```
-ApplicationUser
+IdentityUser
 ├── Id (string, Primary Key)
 ├── UserName (string)
 ├── NormalizedUserName (string)
