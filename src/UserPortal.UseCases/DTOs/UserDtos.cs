@@ -12,7 +12,7 @@ public record class LoginDto(
 );
 
 public record class UserProfileDto(
-    string Username,
+    string UserName,
     string FirstName,
     string LastName,
     string Email,
@@ -20,6 +20,6 @@ public record class UserProfileDto(
 );
 
 public record class UserListDto(
-    string Username,
+    string UserName,
     Guid ProfilePictureId
 );
