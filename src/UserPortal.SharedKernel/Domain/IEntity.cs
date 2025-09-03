@@ -3,10 +3,29 @@ using System;
 namespace UserPortal.SharedKernel.Domain;
 
 /// <summary>
-/// Interface reperesenting a entity with a id property.
-/// This interface helps to identify entities and also ensure that all entitites of this kind have id property which might be beneficial in some cases.
+/// Represents an entity with a unique identifier.
 /// </summary>
-public interface IEntity
+/// <remarks>
+/// This interface helps to identify domain entities and ensures that all entities have a unique identifier.
+/// Implementing this interface enables generic repository patterns and common domain operations.
+/// </remarks>
+public interface IEntity : IEntity<Guid>
 {
-    Guid Id { get; set; }
+}
+
+/// <summary>
+/// Represents an entity with a unique identifier of a specific type.
+/// </summary>
+/// <typeparam name="TId">The type of the identifier.</typeparam>
+/// <remarks>
+/// This interface helps to identify domain entities and ensures that all entities have a unique identifier.
+/// Implementing this interface enables generic repository patterns and common domain operations.
+/// The generic version allows for different types of identifiers while maintaining type safety.
+/// </remarks>
+public interface IEntity<TId> where TId : IEquatable<TId>
+{
+    /// <summary>
+    /// Gets the unique identifier of the entity.
+    /// </summary>
+    TId Id { get; set; }
 }

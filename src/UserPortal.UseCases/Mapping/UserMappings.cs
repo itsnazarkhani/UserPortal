@@ -5,28 +5,33 @@ using UserPortal.UseCases.DTOs;
 namespace UserPortal.UseCases.Mapping;
 
 /// <summary>
-/// Mapping class providing usefull extension methods for mapping ApplicationUser related mappings.
+/// Mapping class providing useful extension methods for mapping ApplicationUser related mappings.
 /// </summary>
 public static class UserMappings
 {
+    private const string DefaultUsername = "Anonymous";
+    private const string DefaultFirstName = "Unknown";
+    
     /// <summary>
     /// Maps ApplicationUser entity to a UserProfileDto dto.
     /// </summary>
-    /// <param name="user">ApplicationUser instance to be mapped.</param>
-    /// <returns>Returns a UserProfileDto dto containing informations which will be shown in profile page of users.</returns>
-    public static UserProfileDto ToProfileDto(this ApplicationUser user) =>
-        new UserProfileDto(
-            user?.UserName ?? "No-User",
-            user?.FirstName ?? "ناشناس",
+    /// <param name="user">ApplicationUser instance to be mapped. Can be null, in which case default values are used.</param>
+    /// <returns>Returns a UserProfileDto dto containing information which will be shown in profile page of users.</returns>
+    /// <remarks>If the user is null, default values will be used for all properties.</remarks>
+    public static UserProfileDto ToProfileDto(this ApplicationUser? user) =>
+        new(
+            user?.UserName ?? DefaultUsername,
+            user?.FirstName ?? DefaultFirstName,
             user?.LastName ?? string.Empty,
-            user?.Email ?? "No-User",
+            user?.Email ?? $"{DefaultUsername}@noemail.com",
             user?.ProfilePictureId ?? Guid.Empty);
 
     /// <summary>
     /// Maps ApplicationUser entity to a UserListDto dto.
     /// </summary>
-    /// <param name="user">ApplicationUser instance to be mapped.</param>
+    /// <param name="user">ApplicationUser instance to be mapped. Can be null, in which case default values are used.</param>
     /// <returns>Returns a UserListDto dto which will be shown in users list page.</returns>
-    public static UserListDto ToUserListDto(this ApplicationUser user) =>
-        new UserListDto(user?.UserName ?? "No-User", user?.ProfilePictureId ?? Guid.Empty);
+    /// <remarks>If the user is null, default values will be used for all properties.</remarks>
+    public static UserListDto ToUserListDto(this ApplicationUser? user) =>
+        new(user?.UserName ?? DefaultUsername, user?.ProfilePictureId ?? Guid.Empty);
 }
