@@ -8,7 +8,8 @@ namespace UserPortal.UseCases.DTOs;
 public record class RegisterDto(
     string UserName,
     string Email,
-    string Password
+    string Password,
+    bool RememberMe = false
 );
 
 /// <summary>
@@ -16,7 +17,8 @@ public record class RegisterDto(
 /// </summary>
 public record class LoginDto(
     string Email,
-    string Password
+    string Password,
+    bool RememberMe = false
 );
 
 /// <summary>
