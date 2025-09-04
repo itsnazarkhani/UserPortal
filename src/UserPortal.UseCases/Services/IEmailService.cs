@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using UserPortal.Core.ValueObjects;
 
-namespace UserPortal.Application.Interfaces;
+namespace UserPortal.UseCases.Services;
 
 /// <summary>
 /// Represents a service for sending emails in the application.

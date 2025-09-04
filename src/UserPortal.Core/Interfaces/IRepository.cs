@@ -1,8 +1,9 @@
 using System;
-using UserPortal.Application.Models;
+using UserPortal.Core.ValueObjects;
 using UserPortal.SharedKernel.Domain;
 
-namespace UserPortal.Application.Interfaces;
+namespace UserPortal.Core.Interfaces;
+
 
 /// <summary>
 /// Interface representing generic repository type.

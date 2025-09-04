@@ -1,4 +1,7 @@
-namespace UserPortal.Application.Models;
+using System;
+
+namespace UserPortal.Core.ValueObjects;
+
 
 /// <summary>
 /// Represents a paginated result of items.

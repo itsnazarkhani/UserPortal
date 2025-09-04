@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UserPortal.Core\UserPortal.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.2.3" />
+    <ProjectReference Include="..\UserPortal.UseCases\UserPortal.UseCases.csproj" />
   </ItemGroup>
 
 </Project>
