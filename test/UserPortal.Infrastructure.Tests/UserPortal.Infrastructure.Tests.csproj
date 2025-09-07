@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\UserPortal.Infrastructure\UserPortal.Infrastructure.csproj" />
+    <ProjectReference Include="..\UserPortal.SharedKernel.Tests\UserPortal.SharedKernel.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
