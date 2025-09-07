@@ -1,7 +1,8 @@
 using System;
 using FluentValidation;
+using UserPortal.UseCases.DTOs;
 
-namespace UserPortal.UseCases.DTOs;
+namespace UserPortal.UseCases.Validations.DTOs;
 
 public class LoginDtoValidations : AbstractValidator<LoginDto>
 {
