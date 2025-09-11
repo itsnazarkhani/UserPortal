@@ -20,10 +20,10 @@ public record class UserProfileDto(
     string FirstName,
     string LastName,
     string Email,
-    Guid ProfilePictureId
+    Guid AvatarId
 );
 
 public record class UserListDto(
     string UserName,
-    Guid ProfilePictureId
+    Guid AvatarId
 );

@@ -12,7 +12,7 @@ public class User : IEntity
     public string LastName { get; set; } = string.Empty;
     public string UserName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
-    public Guid ProfilePictureId { get; set; }
+    public Guid AvatarId { get; set; }
 
     [NotMapped]
     public string FullName { get => $"{FirstName} {LastName}"; }
@@ -20,14 +20,14 @@ public class User : IEntity
     /// <summary>
     /// Populates all the properties of domain user entity.
     /// </summary>
-    public User(Guid id, string firstName, string lastName, string userName, string email, Guid profilePictureId)
+    public User(Guid id, string firstName, string lastName, string userName, string email, Guid avatarId)
     {
         Id = id;
         FirstName = firstName;
         LastName = lastName;
         UserName = userName;
         Email = email;
-        ProfilePictureId = profilePictureId;
+        AvatarId = avatarId;
     }
     public User() { }
 }

@@ -11,7 +11,7 @@ public static class UserMappings
 {
     private const string DefaultUsername = "Anonymous";
     private const string DefaultFirstName = "Unknown";
-    
+
     /// <summary>
     /// Maps ApplicationUser entity to a UserProfileDto dto.
     /// </summary>
@@ -24,7 +24,7 @@ public static class UserMappings
             user?.FirstName ?? DefaultFirstName,
             user?.LastName ?? string.Empty,
             user?.Email ?? $"{DefaultUsername}@noemail.com",
-            user?.ProfilePictureId ?? Guid.Empty);
+            user?.AvatarId ?? Guid.Empty);
 
     /// <summary>
     /// Maps ApplicationUser entity to a UserListDto dto.
@@ -33,5 +33,5 @@ public static class UserMappings
     /// <returns>Returns a UserListDto dto which will be shown in users list page.</returns>
     /// <remarks>If the user is null, default values will be used for all properties.</remarks>
     public static UserListDto ToUserListDto(this User? user) =>
-        new(user?.UserName ?? DefaultUsername, user?.ProfilePictureId ?? Guid.Empty);
+        new(user?.UserName ?? DefaultUsername, user?.AvatarId ?? Guid.Empty);
 }
