@@ -1,4 +1,6 @@
 using System;
+using UserPortal.Core.Entities;
+using UserPortal.Core.Interfaces;
 
 namespace UserPortal.Infrastructure.Data.UnitOfWork;
 
@@ -11,7 +13,7 @@ public interface IUnitOfWork : IAsyncDisposable, IDisposable
     /// <summary>
     /// Gets the repository for managing user entities.
     /// </summary>
-    IRepository<ApplicationUser> Users { get; }
+    IRepository<User> Users { get; }
 
     /// <summary>
     /// Commits all pending changes to the database within a transaction.
@@ -32,12 +34,4 @@ public interface IUnitOfWork : IAsyncDisposable, IDisposable
     /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
     /// <returns>True if the transaction was successfully started, false otherwise.</returns>
     Task<bool> BeginTransactionAsync(CancellationToken cancellationToken = default);
-}
-
-public interface IRepository<T>
-{
-}
-
-public class ApplicationUser
-{
 }

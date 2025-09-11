@@ -18,7 +18,7 @@ public static class UserMappings
     /// <param name="user">ApplicationUser instance to be mapped. Can be null, in which case default values are used.</param>
     /// <returns>Returns a UserProfileDto dto containing information which will be shown in profile page of users.</returns>
     /// <remarks>If the user is null, default values will be used for all properties.</remarks>
-    public static UserProfileDto ToProfileDto(this ApplicationUser? user) =>
+    public static UserProfileDto ToProfileDto(this User? user) =>
         new(
             user?.UserName ?? DefaultUsername,
             user?.FirstName ?? DefaultFirstName,
@@ -32,6 +32,6 @@ public static class UserMappings
     /// <param name="user">ApplicationUser instance to be mapped. Can be null, in which case default values are used.</param>
     /// <returns>Returns a UserListDto dto which will be shown in users list page.</returns>
     /// <remarks>If the user is null, default values will be used for all properties.</remarks>
-    public static UserListDto ToUserListDto(this ApplicationUser? user) =>
+    public static UserListDto ToUserListDto(this User? user) =>
         new(user?.UserName ?? DefaultUsername, user?.ProfilePictureId ?? Guid.Empty);
 }
