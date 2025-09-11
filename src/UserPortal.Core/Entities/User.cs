@@ -16,4 +16,18 @@ public class User : IEntity
 
     [NotMapped]
     public string FullName { get => $"{FirstName} {LastName}"; }
+
+    /// <summary>
+    /// Populates all the properties of domain user entity.
+    /// </summary>
+    public User(Guid id, string firstName, string lastName, string userName, string email, Guid profilePictureId)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        UserName = userName;
+        Email = email;
+        ProfilePictureId = profilePictureId;
+    }
+    public User() { }
 }
