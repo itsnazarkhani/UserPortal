@@ -1,35 +1,32 @@
 using System;
 using FluentValidation;
-using UserPortal.Core.Constants;
 using UserPortal.UseCases.DTOs;
+using UserPortal.UseCases.Validations.Configurations;
+using UserPortal.UseCases.Validations.Rules;
 
 namespace UserPortal.UseCases.Validations.DTOs;
 
 public class LoginDtoValidations : AbstractValidator<LoginDto>
 {
-    public LoginDtoValidations()
+    public LoginDtoValidations(
+        IEmailValidationRules emailRules,
+        IPasswordValidationRules passwordRules,
+        IValidationModeConfig validationMode)
     {
+        RuleLevelCascadeMode = validationMode.RuleLevelCascadeMode;
+        ClassLevelCascadeMode = validationMode.ClassLevelCascadeMode;
         RuleFor(x => x.Email)
             .NotEmpty()
-            .WithMessage("آدرس ایمیل الزامی می‌باشد.")
+            .WithMessage(emailRules.EmptyMessage)
             .EmailAddress()
-            .WithMessage("آدرس ایمیل نامعتبر است.");
+            .WithMessage(emailRules.InvalidMessage);
 
         RuleFor(x => x.Password)
             .NotEmpty()
-            .WithMessage("رمز عبور الزامی است.")
-            .NotEmpty()
-            .WithMessage("رمز عبور الزامیست.")
-            .Length(ValidationConstants.Password.MinLength,
-                    ValidationConstants.Password.MaxLength)
-            .WithMessage(
-                ValidationMessages.ValidLengthRange(
-                    "رمز عبور",
-                    ValidationConstants.Password.MinLength,
-                    ValidationConstants.Password.MaxLength
-                )
-            )
-            .Matches(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#!$%^&*?])")
-            .WithMessage("رمز عبور میبایست حداقل دارای یک عدد، یک حرف انگلیسی کوچک و یک حرف انگلیسی بزرگ و یکی از کاراکترهای خاصی همچون \"@#!$%^&*?\" باشد.");
+            .WithMessage(passwordRules.EmptyMessage)
+            .Length(passwordRules.MinLength, passwordRules.MaxLength)
+            .WithMessage(passwordRules.LengthMessage)
+            .Matches(passwordRules.Pattern)
+            .WithMessage(passwordRules.PatternMessage);
     }
 }

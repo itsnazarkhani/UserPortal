@@ -1,6 +1,5 @@
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using UserPortal.UseCases.Validations.DTOs;
+using UserPortal.UseCases.Validations.Configurations;
+using UserPortal.Web.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,10 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Configure FluentValidation
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddFluentValidationClientsideAdapters();
-// Add FluentValidation validators
-builder.Services.AddValidatorsFromAssemblyContaining<RegistreDtoValidations>();
+builder.Services.ConfigureFluentValidation()
+                .ConfigureAspNetValidation();
 
 var app = builder.Build();
 
