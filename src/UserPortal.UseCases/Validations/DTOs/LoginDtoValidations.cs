@@ -1,5 +1,6 @@
 using System;
 using FluentValidation;
+using UserPortal.Core.Constants;
 using UserPortal.UseCases.DTOs;
 
 namespace UserPortal.UseCases.Validations.DTOs;
@@ -19,8 +20,15 @@ public class LoginDtoValidations : AbstractValidator<LoginDto>
             .WithMessage("رمز عبور الزامی است.")
             .NotEmpty()
             .WithMessage("رمز عبور الزامیست.")
-            .Length(6, 120)
-            .WithMessage("رمز عبور می‌بایست بین 6 تا 120 کاراکتر باشد!")
+            .Length(ValidationConstants.Password.MinLength,
+                    ValidationConstants.Password.MaxLength)
+            .WithMessage(
+                ValidationMessages.ValidLengthRange(
+                    "رمز عبور",
+                    ValidationConstants.Password.MinLength,
+                    ValidationConstants.Password.MaxLength
+                )
+            )
             .Matches(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#!$%^&*?])")
             .WithMessage("رمز عبور میبایست حداقل دارای یک عدد، یک حرف انگلیسی کوچک و یک حرف انگلیسی بزرگ و یکی از کاراکترهای خاصی همچون \"@#!$%^&*?\" باشد.");
     }
