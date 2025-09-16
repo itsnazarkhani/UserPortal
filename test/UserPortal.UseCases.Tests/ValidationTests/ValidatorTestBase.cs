@@ -9,5 +9,6 @@ public abstract class ValidatorTestBase
     protected readonly Faker Faker = new("fa");
     protected readonly FakeEmailValidationRules EmailRules = new();
     protected readonly FakePasswordValidationRules PasswordRules = new();
+    protected readonly FakeUserNameValidationRules UserNameRules = new();
     protected readonly IValidationModeConfig ValidationMode = new FakeValidationModeConfig();
 }

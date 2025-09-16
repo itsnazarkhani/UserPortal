@@ -14,7 +14,7 @@ public static class AspNetValidationConfig
                .AddFluentValidationClientsideAdapters();
 
         // Register all validators from the assembly containing our DTOs
-        services.AddValidatorsFromAssemblyContaining<RegistreDtoValidations>();
+        services.AddValidatorsFromAssemblyContaining<RegisterDtoValidator>();
 
         return services;
     }
