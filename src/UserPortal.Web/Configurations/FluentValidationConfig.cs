@@ -1,14 +1,27 @@
-using System;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using UserPortal.UseCases.Validations.Configurations;
 using UserPortal.UseCases.Validations.DTOs;
 using UserPortal.UseCases.Validations.Rules;
 
-namespace UserPortal.UseCases.Validations.Configurations;
+namespace UserPortal.Web.Configurations;
 
-public static class ValidationConfig
+public static class FluentValidationConfig
 {
-    public static IServiceCollection ConfigureFluentValidation(this IServiceCollection services)
+    public static IServiceCollection ConfigureAspNetValidation(this IServiceCollection services)
+    {
+        // Enable automatic validation and client-side adapters
+        services.AddFluentValidationAutoValidation()
+               .AddFluentValidationClientsideAdapters();
+
+        // Register all validators from the assembly containing our DTOs
+        services.AddValidatorsFromAssemblyContaining<RegisterDtoValidator>();
+
+        return services;
+    }
+
+      public static IServiceCollection ConfigureFluentValidation(this IServiceCollection services)
     {
         // Register validation rule providers
         services.AddSingleton<IEmailValidationRules, DefaultEmailValidationRules>();

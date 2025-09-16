@@ -8,6 +8,7 @@ using UserPortal.UseCases.Tests.TestDoubles;
 
 namespace UserPortal.UseCases.Tests.ValidationTests;
 
+// TODO: Decouple tests for email and password rules to separate classes
 public class LoginDtoValidatorTests : ValidatorTestBase
 {
     private readonly LoginDtoValidator _validator;
