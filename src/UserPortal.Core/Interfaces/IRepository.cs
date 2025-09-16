@@ -1,5 +1,5 @@
 using System;
-using UserPortal.Core.ValueObjects;
+using UserPortal.Core.Results;
 using UserPortal.SharedKernel.Domain;
 
 namespace UserPortal.Core.Interfaces;

@@ -1,6 +1,6 @@
 using System;
 
-namespace UserPortal.Core.ValueObjects;
+namespace UserPortal.Core.Results;
 
 
 /// <summary>
