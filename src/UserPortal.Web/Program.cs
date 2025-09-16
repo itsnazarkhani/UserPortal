@@ -9,6 +9,7 @@ builder.Services.ConfigureFluentValidation()
 
 // Configure Database and Identity
 builder.Services.ConfigureDatabase(builder.Configuration)
+                .ConfigureRepositories()
                 .ConfigureIdentity();
 
 // Add services to the container.
