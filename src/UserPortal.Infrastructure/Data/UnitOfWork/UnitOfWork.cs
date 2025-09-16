@@ -1,5 +1,7 @@
 using System;
+using System.ComponentModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using UserPortal.Core.Entities;
 using UserPortal.Core.Interfaces;
 using UserPortal.Infrastructure.Data.Repositories;
@@ -9,7 +11,7 @@ namespace UserPortal.Infrastructure.Data.UnitOfWork;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationDbContext _context;
-    private bool _disposed = false;
+    private IDbContextTransaction? _transaction;
 
     public IRepository<User> Users => new Repository<User>(_context);
 
@@ -18,15 +20,35 @@ public class UnitOfWork : IUnitOfWork
         _context = context;
     }
 
-    public Task<bool> BeginTransactionAsync(CancellationToken cancellationToken = default)
+    public async Task<bool> BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        if (_transaction != null)
+            return false;
+
+        _transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+        return true;
     }
 
-    public Task<bool> CommitChangesAsync(CancellationToken cancellationToken = default)
+    public async Task CommitAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        if (_transaction == null) return;
+
+        await _context.SaveChangesAsync(cancellationToken);
+        await _transaction.CommitAsync(cancellationToken);
+        await _transaction.DisposeAsync();
+        _transaction = null;
     }
+
+    public async Task RollbackAsync(CancellationToken cancellationToken = default)
+    {
+        if (_transaction == null) return;
+
+        await _transaction.RollbackAsync(cancellationToken);
+        await _transaction.DisposeAsync();
+        _transaction = null;
+    }
+
+    private bool _disposed = false;
 
     public void Dispose()
     {
@@ -55,10 +77,5 @@ public class UnitOfWork : IUnitOfWork
     {
         if (_context != null)
             await _context.DisposeAsync().ConfigureAwait(false);
-    }
-
-    public Task RollbackAsync()
-    {
-        throw new NotImplementedException();
     }
 }

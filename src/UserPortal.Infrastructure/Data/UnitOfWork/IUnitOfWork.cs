@@ -21,12 +21,12 @@ public interface IUnitOfWork : IAsyncDisposable, IDisposable
     /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
     /// <returns>True if the commit was successful, false otherwise.</returns>
     /// <exception cref="InvalidOperationException">Thrown when the database context is not available.</exception>
-    Task<bool> CommitChangesAsync(CancellationToken cancellationToken = default);
+    Task CommitAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Rolls back all pending changes, reverting the current transaction.
     /// </summary>
-    Task RollbackAsync();
+    Task RollbackAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Begins a new transaction for the current unit of work.
