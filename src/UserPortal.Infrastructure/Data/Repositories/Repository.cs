@@ -1,7 +1,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using UserPortal.Core.Interfaces;
-using UserPortal.Core.ValueObjects;
+using UserPortal.Core.Results;
+using UserPortal.Infrastructure.Extensions;
 using UserPortal.SharedKernel.Domain;
 
 namespace UserPortal.Infrastructure.Data.Repositories;
@@ -17,43 +18,45 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, I
         _dbSet = _context.Set<TEntity>();
     }
 
-    public Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await _dbSet.AddAsync(entity, cancellationToken);
+        return entity;
     }
 
-    public Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public void Delete(TEntity entity, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        _dbSet.Remove(entity);
     }
 
-    public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default) =>
+        await _dbSet.AnyAsync(e => e.Id == id, cancellationToken);
+
+    public async Task<PaginatedResult<TEntity>> GetAllAsync(int pageSize, int page, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await _dbSet.AsNoTracking()
+                           .PaginateAsync(pageSize, page, cancellationToken);
     }
 
-    public Task<PaginatedResult<TEntity>> GetAllAsync(int pageSize, int page, CancellationToken cancellationToken = default)
+    public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await _dbSet.AsNoTracking()
+                           .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
 
-    public Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<int> GetCountAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<int> GetCountAsync(CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
+        return await _dbSet.CountAsync(cancellationToken);
     }
 
     public Task<PaginatedResult<TEntity>> GetWhereAsync(Func<TEntity, bool> predicate, int pageSize, int page, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var query = _dbSet.AsNoTracking().Where(predicate).AsQueryable();
+        return query.PaginateAsync(pageSize, page, cancellationToken);
     }
 
-    public Task<bool> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public void Update(TEntity entity, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        _dbSet.Update(entity);
     }
 }

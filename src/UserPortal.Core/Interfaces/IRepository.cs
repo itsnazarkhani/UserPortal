@@ -60,7 +60,7 @@ public interface IRepository<TEntity> where TEntity : class, IEntity
     /// <param name="entity">Entity to be deleted.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>True if entity deleted successfully, false if entity not found.</returns>
-    Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
+    void Delete(TEntity entity, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Checks whether an entity exists.
@@ -78,5 +78,5 @@ public interface IRepository<TEntity> where TEntity : class, IEntity
     /// <remarks>It searches using the entity's ID which is required and cannot be updated.</remarks>
     /// <returns>Returns true if entity found and updated, false otherwise.</returns>
     /// <exception cref="ArgumentNullException">Thrown when entity is null.</exception>
-    Task<bool> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
+    void Update(TEntity entity, CancellationToken cancellationToken = default);
 }
