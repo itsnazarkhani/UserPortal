@@ -8,11 +8,12 @@ namespace UserPortal.Infrastructure.Data.UnitOfWork;
 
 public class UnitOfWork : IUnitOfWork
 {
-    public IRepository<User> Users { get; init; }
+    private readonly ApplicationDbContext _context;
+    public IRepository<User> Users => new Repository<User>(_context);
 
     public UnitOfWork(ApplicationDbContext context)
     {
-        Users = new Repository<User>(context);
+        _context = context;
     }
 
     public Task<bool> BeginTransactionAsync(CancellationToken cancellationToken = default)
