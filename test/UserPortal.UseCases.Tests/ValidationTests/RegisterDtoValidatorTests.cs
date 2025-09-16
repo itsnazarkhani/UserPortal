@@ -215,12 +215,14 @@ public class RegisterDtoValidatorTests : ValidatorTestBase
     }
 
     [Theory]
-    [InlineData("_user")]
-    [InlineData("user_")]
-    [InlineData("user..name")]
-    [InlineData("user__name")]
-    [InlineData(".user")]
-    [InlineData("user.")]
+    [InlineData("_user")]   // Starts with underscore
+    [InlineData("user_")]   // Ends with underscore
+    [InlineData("user..name")]  // Double dots
+    [InlineData("user__name")]  // Double underscores
+    [InlineData(".user")]   // Starts with dot
+    [InlineData("user.")]   // Ends with dot
+    [InlineData("user name")]   // Has white space
+    [InlineData("علی")] // Non-ASCII characters
     public void Should_Have_Error_When_UserName_DoesNot_Match_Valid_Pattern(string userName)
     {
         // Arrange
