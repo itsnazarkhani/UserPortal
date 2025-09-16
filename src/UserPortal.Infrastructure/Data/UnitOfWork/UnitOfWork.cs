@@ -9,6 +9,8 @@ namespace UserPortal.Infrastructure.Data.UnitOfWork;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationDbContext _context;
+    private bool _disposed = false;
+
     public IRepository<User> Users => new Repository<User>(_context);
 
     public UnitOfWork(ApplicationDbContext context)
@@ -28,12 +30,31 @@ public class UnitOfWork : IUnitOfWork
 
     public void Dispose()
     {
-        throw new NotImplementedException();
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
-    public ValueTask DisposeAsync()
+    protected virtual void Dispose(bool disposing)
     {
-        throw new NotImplementedException();
+        if (disposing)
+            _context?.Dispose();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (!_disposed)
+        {
+            await DisposeAsyncCore().ConfigureAwait(false);
+            Dispose(true);
+            GC.SuppressFinalize(this);
+            _disposed = true;
+        }
+    }
+
+    protected virtual async Task DisposeAsyncCore()
+    {
+        if (_context != null)
+            await _context.DisposeAsync().ConfigureAwait(false);
     }
 
     public Task RollbackAsync()
