@@ -25,6 +25,22 @@ public class RegisterDtoValidatorTests : ValidatorTestBase
             Faker.Random.Bool()
         );
 
+    private RegisterDto GetRegisterDtoWithPassword(string password) =>
+        new RegisterDto(
+            Faker.Internet.UserName(),
+            Faker.Internet.Email(),
+            password,
+            Faker.Random.Bool()
+        );
+
+    private RegisterDto GetRegisterDtoWithEmail(string email) =>
+       new RegisterDto(
+           Faker.Internet.UserName(),
+           email,
+           PasswordGenerator.GenerateSecurePassword(ValidationConstants.Password.MinLength),
+           Faker.Random.Bool()
+       );
+
     [Fact]
     public void Should_Not_Have_Error_When_Input_Is_Valid()
     {
@@ -47,12 +63,7 @@ public class RegisterDtoValidatorTests : ValidatorTestBase
     public void Should_Have_Error_When_Email_Is_Empty()
     {
         // Arrange
-        var dto = new RegisterDto(
-          Faker.Internet.UserName(),
-          string.Empty,
-          PasswordGenerator.GenerateSecurePassword(ValidationConstants.Password.MinLength),
-          Faker.Random.Bool()
-      );
+        var dto = GetRegisterDtoWithEmail(string.Empty);
 
         // Act 
         var result = _validator.TestValidate(dto);
@@ -67,12 +78,7 @@ public class RegisterDtoValidatorTests : ValidatorTestBase
     public void Should_Have_Validation_Error_When_Email_Is_Invalid()
     {
         // Arrange
-        var dto = new RegisterDto(
-               Faker.Internet.UserName(),
-               "invalid-email",
-               PasswordGenerator.GenerateSecurePassword(ValidationConstants.Password.MinLength),
-               Faker.Random.Bool()
-        );
+        var dto = GetRegisterDtoWithEmail("invalid-email");
 
         // Act
         var result = _validator.TestValidate(dto);
@@ -87,12 +93,7 @@ public class RegisterDtoValidatorTests : ValidatorTestBase
     public void Should_Have_Validation_Error_When_Password_Is_Empty()
     {
         // Arrange 
-        var dto = new RegisterDto(
-            Faker.Internet.UserName(),
-            Faker.Internet.Email(),
-            string.Empty,
-            true
-        );
+        var dto = GetRegisterDtoWithPassword(string.Empty);
 
         // Act
         var result = _validator.TestValidate(dto);
@@ -109,12 +110,8 @@ public class RegisterDtoValidatorTests : ValidatorTestBase
         if (ValidationConstants.Password.MinLength > 0)
         {
             // Arrange
-            var dto = new RegisterDto(
-                Faker.Internet.UserName(),
-                Faker.Internet.Email(),
-                PasswordGenerator.GenerateSecurePassword(ValidationConstants.Password.MinLength - 1),
-                false
-            );
+            var dto = GetRegisterDtoWithPassword(
+                PasswordGenerator.GenerateSecurePassword(ValidationConstants.Password.MinLength - 1));
 
             // Act
             var result = _validator.TestValidate(dto);
@@ -135,12 +132,8 @@ public class RegisterDtoValidatorTests : ValidatorTestBase
         if (ValidationConstants.Password.MaxLength > 0 && ValidationConstants.Password.MaxLength < int.MaxValue)
         {
             // Arrange
-            var dto = new RegisterDto(
-                Faker.Internet.UserName(),
-                Faker.Internet.Email(),
-                PasswordGenerator.GenerateSecurePassword(ValidationConstants.Password.MaxLength + 1),
-                Faker.Random.Bool()
-            );
+            var dto = GetRegisterDtoWithPassword(
+                PasswordGenerator.GenerateSecurePassword(ValidationConstants.Password.MaxLength + 1));
 
             // Act
             var result = _validator.TestValidate(dto);
@@ -164,12 +157,7 @@ public class RegisterDtoValidatorTests : ValidatorTestBase
     public void Should_Have_Validation_Error_When_Password_DoesNot_Follow_Valid_Pattern(string password)
     {
         // Arrange
-        var dto = new RegisterDto(
-            Faker.Internet.UserName(),
-            Faker.Internet.Email(),
-            password,
-            Faker.Random.Bool()
-        );
+        var dto = GetRegisterDtoWithPassword(password);
 
         // Act
         var result = _validator.TestValidate(dto);
@@ -183,12 +171,7 @@ public class RegisterDtoValidatorTests : ValidatorTestBase
     public void Should_Have_Validation_Error_When_UserName_Is_Empty()
     {
         // Arrange
-        var dto = new RegisterDto(
-            string.Empty,
-            Faker.Internet.Email(),
-            PasswordGenerator.GenerateSecurePassword(ValidationConstants.Password.MinLength),
-            Faker.Random.Bool()
-        );
+        var dto = GetRegisterDtoWithUserName(string.Empty);
 
         // Act
         var result = _validator.TestValidate(dto);
@@ -203,7 +186,8 @@ public class RegisterDtoValidatorTests : ValidatorTestBase
     public void Should_Have_Validation_Error_When_UserName_Is_Too_Short()
     {
         // Arrange
-        var dto = GetRegisterDtoWithUserName(Faker.Lorem.Letter(ValidationConstants.UserName.MinLength - 1));
+        var dto = GetRegisterDtoWithUserName(
+            Faker.Lorem.Letter(ValidationConstants.UserName.MinLength - 1));
 
         // Act
         var result = _validator.TestValidate(dto);
@@ -218,7 +202,8 @@ public class RegisterDtoValidatorTests : ValidatorTestBase
     public void Should_Have_Validation_Error_When_UserName_Is_Too_Long()
     {
         // Arrange
-        var dto = GetRegisterDtoWithUserName(Faker.Lorem.Letter(ValidationConstants.UserName.MaxLength + 1));
+        var dto = GetRegisterDtoWithUserName(
+            Faker.Lorem.Letter(ValidationConstants.UserName.MaxLength + 1));
 
         // Act
         var result = _validator.TestValidate(dto);
