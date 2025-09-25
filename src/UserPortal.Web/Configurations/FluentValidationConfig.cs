@@ -27,6 +27,7 @@ public static class FluentValidationConfig
         services.AddSingleton<IEmailValidationRules, DefaultEmailValidationRules>();
         services.AddSingleton<IPasswordValidationRules, DefaultPasswordValidationRules>();
         services.AddSingleton<IValidationModeConfig, DefaultValidationModeConfig>();
+        services.AddSingleton<IUserNameValidationRules, DefaultUserNameValidationRules>();
 
         // Configure global validation options
         var validationConfig = new DefaultValidationModeConfig();
