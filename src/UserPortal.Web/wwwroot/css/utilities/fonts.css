@@ -1,0 +1,9 @@
+@import url(../base/root.css);
+
+.font-prosto {
+    font-family: var(--font-prosto);
+}
+
+.font-primary {
+    font-family: var(--font-primary);
+}

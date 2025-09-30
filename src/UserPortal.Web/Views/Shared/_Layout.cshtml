@@ -1,20 +1,33 @@
 ﻿@using Microsoft.AspNetCore.Routing.Constraints
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - UserPortal</title>
 
-    @* Reference CSS files *@
+    @* import fonts *@
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Prosto+One&display=swap"
+        rel="stylesheet">
 
+    @* Reference CSS files *@
+    <link rel="stylesheet" href="~/base/root.css">
+    <link rel="stylesheet" href="~/base/base.css">
+    <link rel="stylesheet" href="~/base/colors.css">
+    <link rel="stylesheet" href="~/base/fonts.css">
 
     @* Section for page-specific CSS *@
-    @await RenderSectionAsync("Styles",  false);
+    @await RenderSectionAsync("Styles", false);
 </head>
+
 <body>
     @RenderBody()
 
     @await RenderSectionAsync("Scripts", false);
 </body>
+
 </html>

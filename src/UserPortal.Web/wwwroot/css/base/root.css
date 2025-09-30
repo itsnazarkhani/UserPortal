@@ -1,0 +1,12 @@
+:root {
+    /* ========== Colors ========== */
+    --color-white: #fff;
+    --color-black: #000;
+    --color-primary: #2CACD3;
+    --color-secondary: #A3346B;
+    --color-gray: #F5F5F5;
+
+    /* ========== Fonts ========== */
+    --font-prosto: "Prosto One", sans-serif;
+    --font-primary: "Open Sans", sans-serif;
+}

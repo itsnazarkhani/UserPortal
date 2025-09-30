@@ -1,0 +1,29 @@
+@import url(../base/root.css);
+
+.bg-white {
+    background-color: var(--color-white);
+}
+
+.bg-black {
+    background-color: var(--color-black);
+}
+
+.bg-primary {
+    background-color: var(--color-primary);
+}
+
+.bg-secondary {
+    background-color: var(--color-secondary);
+}
+
+.bg-gray {
+    background-color: var(--color-gray);
+}
+
+.txt-white {
+    color: var(--color-white);
+}
+
+.txt-black {
+    color: var(--color-black);
+}
