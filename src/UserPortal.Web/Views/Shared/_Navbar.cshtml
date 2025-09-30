@@ -1,0 +1,18 @@
+﻿<nav class="nav">
+    <a class="nav-logo" asp-controller="Home" asp-action="Index">
+        UserPortal
+    </a>
+    @if ((bool)(ViewData["IsLoggedIn"] ?? false))
+    {
+        <a asp-controller="User" asp-action="Profile">
+            Logged IN
+        </a>
+    }
+    else
+    {
+        <a asp-controller="Auth" asp-action="Login">
+            Login
+        </a>
+    }
+
+</nav>

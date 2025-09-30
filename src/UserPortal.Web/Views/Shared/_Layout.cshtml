@@ -5,7 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"] - UserPortal</title>
+    <title>
+        @(
+                ViewData["Title"] == null
+                ? "UserPortal"
+                : ViewData["Title"] + "- UserPortal"
+                )
+    </title>
 
     @* import fonts *@
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,19 +21,24 @@
         rel="stylesheet">
 
     @* Reference CSS files *@
-    <link rel="stylesheet" href="~/base/root.css">
-    <link rel="stylesheet" href="~/base/base.css">
-    <link rel="stylesheet" href="~/base/colors.css">
-    <link rel="stylesheet" href="~/base/fonts.css">
+    <link rel="stylesheet" href="~/css/base/root.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/base/main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/utilities/colors.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/utilities/fonts.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/components/navbar.css" asp-append-version="true" />
+
 
     @* Section for page-specific CSS *@
-    @await RenderSectionAsync("Styles", false);
+    @await RenderSectionAsync("Styles", false)
 </head>
 
 <body>
-    @RenderBody()
+    <header>
+        @await Html.PartialAsync("_Navbar")
+    </header>
+    <main>@RenderBody()</main>
 
-    @await RenderSectionAsync("Scripts", false);
+    @await RenderSectionAsync("Scripts", false)
 </body>
 
 </html>
