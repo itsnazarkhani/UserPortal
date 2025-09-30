@@ -13,6 +13,6 @@ namespace UserPortal.Infrastructure.Identity;
 public class ApplicationUser : IdentityUser<Guid>, IEntity
 {
     // 1-1 relationship with doamin user
-    public int UserId { get; set; }
+    public int DomainUserId { get; set; }
     public User User { get; set; } = null!;
 }
