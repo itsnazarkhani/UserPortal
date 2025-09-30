@@ -19,4 +19,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.9" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views/Auth/" />
+    <Folder Include="Views/User/" />
+    <Folder Include="wwwroot/css/" />
+    <Folder Include="wwwroot/js/" />
+  </ItemGroup>
 </Project>
