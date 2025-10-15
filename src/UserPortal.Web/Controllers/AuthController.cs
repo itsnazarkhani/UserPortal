@@ -18,6 +18,11 @@ namespace UserPortal.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult AccessDenied()
+        {
+            return View();
+        }
         
         public ActionResult Logout()
         {

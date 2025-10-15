@@ -35,6 +35,15 @@ public static class IdentityConfig
             options.SignIn.RequireConfirmedPhoneNumber = false;
         }).AddEntityFrameworkStores<ApplicationDbContext>();
 
+        services.AddAuthentication("CookieAuth")
+                .AddCookie("CookieAuth", config =>
+                {
+                    config.Cookie.Name = "UserPortal.Auth.Cookie";
+                    config.LoginPath = "/Auth/Login";
+                    config.LogoutPath = "/Auth/Logout";
+                    config.AccessDeniedPath = "/Auth/AccessDenied";
+                });
+
         return services;
     }
 }
