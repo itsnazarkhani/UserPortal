@@ -4,11 +4,14 @@ namespace UserPortal.Web.Controllers
 {
     public class UserController : Controller
     {
-        // GET: UserController
-        public ActionResult Index()
+        public ActionResult Profile()
         {
             return View();
         }
 
+        public ActionResult Settings()
+        {
+            return View();
+        }
     }
 }
