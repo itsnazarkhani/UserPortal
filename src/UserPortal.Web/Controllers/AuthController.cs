@@ -13,6 +13,11 @@ namespace UserPortal.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
         
         public ActionResult Logout()
         {
