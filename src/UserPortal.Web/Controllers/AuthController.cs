@@ -4,11 +4,19 @@ namespace UserPortal.Web.Controllers
 {
     public class AuthController : Controller
     {
-        // GET: AuthController
-        public ActionResult Index()
+        public ActionResult Login()
         {
             return View();
         }
 
+        public ActionResult Register()
+        {
+            return View();
+        }
+        
+        public ActionResult Logout()
+        {
+            return View();
+        }
     }
 }
