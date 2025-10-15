@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using UserPortal.Core.Constants;
 using UserPortal.Infrastructure.Data;
@@ -10,7 +11,7 @@ public static class IdentityConfig
 {
     public static IServiceCollection ConfigureIdentity(this IServiceCollection services)
     {
-        services.AddIdentityCore<ApplicationUser>(options =>
+        services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
         {
             // Password settings
             options.Password.RequireDigit = true;
@@ -33,7 +34,9 @@ public static class IdentityConfig
             // Sign-in settings
             options.SignIn.RequireConfirmedEmail = false;
             options.SignIn.RequireConfirmedPhoneNumber = false;
-        }).AddEntityFrameworkStores<ApplicationDbContext>();
+        })
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddDefaultTokenProviders();
 
         services.AddAuthentication("CookieAuth")
                 .AddCookie("CookieAuth", config =>

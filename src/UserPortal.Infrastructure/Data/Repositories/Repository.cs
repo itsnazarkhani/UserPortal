@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using UserPortal.Core.Interfaces;
 using UserPortal.Core.Results;
@@ -18,6 +20,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, I
         _dbSet = _context.Set<TEntity>();
     }
 
+    public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default) =>
+        await _dbSet.AsNoTracking().FirstOrDefaultAsync(predicate, cancellationToken);
     public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         await _dbSet.AddAsync(entity, cancellationToken);

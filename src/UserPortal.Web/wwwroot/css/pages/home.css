@@ -27,9 +27,43 @@ body {
     gap: 20px;
 }
 
+@media (max-width: 768px) {
+    .landing-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: calc(100vh-70px);
+        background-image: url("~/img/glowing-portal.jpg");
+        background-size: cover;
+        /* ensure it covers container */
+        background-position: center;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        /* center the image */
+        background-repeat: no-repeat;
+    }
+
+    .landing-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /* perfectly center */
+        display: flex;
+        flex-direction: column;
+        /* stack items vertically */
+        align-items: center;
+        /* horizontal centering */
+        text-align: center;
+        /* center text */
+    }
+}
+
 .btn-glass {
     margin-top: 10px;
-    padding: 20px 30px;
+    font-size: 0.9rem;
+    padding: 15px 25px;
     font-size: 1rem;
     color: var(--color-white);
     text-decoration: none;
@@ -46,7 +80,7 @@ body {
 }
 
 .landing-text {
-    font-size: 4rem;
+    font-size: 3rem;
     text-align: start;
 }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using UserPortal.Core.Results;
 using UserPortal.SharedKernel.Domain;
 
@@ -11,6 +12,11 @@ namespace UserPortal.Core.Interfaces;
 /// <typeparam name="TEntity">Type of entity which must implement IEntity and be a concrete class.</typeparam>
 public interface IRepository<TEntity> where TEntity : class, IEntity
 {
+    /// <summary>
+    /// Finds the first entity that matches the specified predicate or returns null if none found.
+    /// </summary>
+    Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+
     /// <summary>
     /// Gets paginated records from the database asynchronously.
     /// </summary>

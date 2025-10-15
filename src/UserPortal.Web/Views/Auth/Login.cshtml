@@ -1,16 +1,18 @@
 ﻿<main id="login-page">
     <main class="auth-form-container" id="login-container">
         <header>Login</header>
-        <form action="post" id="login-form">
+        <form asp-action="Login" method="post" id="login-form">
             <div>
-                <input type="text" class="text-input" id="username" name="username" placeholder="Username" required />
+                <input type="email" class="text-input" id="Email" name="Email" placeholder="Email" value="@Model?.Email"
+                    required />
             </div>
             <div>
-                <input type="password" class="text-input" id="password" name="password" placeholder="Password"
+                <input type="password" class="text-input" id="Password" name="Password" placeholder="Password"
                     required />
             </div>
             <label class="checkbox-container">
-                <input type="checkbox" id="remember-me" name="remember-me" value="true" />
+                <input type="checkbox" id="RememberMe" name="RememberMe" value="true" @(Model?.RememberMe == true ?
+                                                                                                          "checked" : "") />
                 <span class="checkmark"></span>
                 Remember me?
             </label>
@@ -18,6 +20,8 @@
             <div class="auth-links">
                 <a href="/Auth/ForgotPassword">Forgot Password?</a>
                 <a href="/Auth/Register">Create an Account→</a>
+            </div>
         </form>
+        <p style="color:red">@ViewBag.Error</p>
     </main>
 </main>

@@ -15,6 +15,15 @@ builder.Services.ConfigureDatabase(builder.Configuration)
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5000);  // HTTP
+    options.ListenAnyIP(5001, listenOptions =>
+    {
+        listenOptions.UseHttps();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -10,9 +10,14 @@
     }
     else
     {
-        <a class="nav-logo" asp-controller="Auth" asp-action="Login">
+        <!-- Text link for desktop -->
+        <a class="nav-logo" id="nav-login-text" asp-controller="Auth" asp-action="Login">
             Login
         </a>
-    }
 
+        <!-- Icon link for small screens -->
+        <a class="nav-logo" id="nav-login-icon" asp-controller="Auth" asp-action="Login">
+            <img src="~/icon/login.png" alt="Login" />
+        </a>
+    }
 </nav>

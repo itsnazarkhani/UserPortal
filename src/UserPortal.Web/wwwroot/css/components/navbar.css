@@ -13,5 +13,32 @@
     color: var(--color-white);
     font-size: 2em;
     font-family: "Prosto One", cursive;
-    text-decoration: none;    
+    text-decoration: none;
+}
+
+/* Default: show text, hide icon */
+#nav-login-text {
+    display: inline;
+    font-size: 1.2rem;
+}
+
+#nav-login-icon {
+    display: none;
+}
+
+/* Small screens: hide text, show icon */
+@media screen and (max-width: 768px) {
+    #nav-login-text {
+        display: none;
+    }
+
+    #nav-login-icon {
+        display: inline;
+    }
+}
+
+/* Optional: style the icon */
+#nav-login-icon img {
+    width: 30px;
+    height: 30px;
 }
