@@ -15,6 +15,10 @@ public record class LoginDto(
     bool RememberMe = false
 );
 
+public record class ForgotPasswordDto(
+    string Email
+);
+
 public record class UserProfileDto(
     string UserName,
     string FirstName,
