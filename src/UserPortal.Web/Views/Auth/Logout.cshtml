@@ -1,5 +1,26 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Logout";
+}
+
+<main id="logout-page">
+    <section class="auth-form-container" id="logout-container">
+        <header>Logout</header>
+        <p class="logout-message">
+            Are you sure you want to log out?
+        </p>
+
+        <form asp-action="Logout" method="post" id="logout-form">
+            <button type="submit" id="confirm-logout">Yes, Log Out</button>
+            <a href="/Profile" class="cancel-logout">Cancel</a>
+        </form>
+
+        @if (ViewBag.Error != null)
+        {
+            <p style="color:red">@ViewBag.Error</p>
+        }
+    </section>
+</main>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/logout.css" asp-append-version="true" />
 }
