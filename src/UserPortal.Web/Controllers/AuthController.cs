@@ -27,7 +27,7 @@ namespace UserPortal.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Login(string? returnUrl)
+        public IActionResult Login(string? returnUrl)
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
@@ -47,26 +47,20 @@ namespace UserPortal.Web.Controllers
                 return View(dto);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user, dto.Password, dto.RememberMe, lockoutOnFailure: true);
+            var result = await _signInManager.PasswordSignInAsync(user, dto.Password, dto.RememberMe, true);
 
             if (result.Succeeded)
                 return RedirectToLocal(returnUrl);
 
-            if (result.IsLockedOut)
-            {
-                ViewBag.Error = "Account locked. Please try again later.";
-                return View(dto);
-            }
+            ViewBag.Error = result.IsLockedOut
+                ? "Account locked. Please try again later."
+                : "Invalid login attempt.";
 
-            ViewBag.Error = "Invalid login attempt.";
             return View(dto);
         }
 
         [HttpGet]
-        public ActionResult Register()
-        {
-            return View();
-        }
+        public IActionResult Register() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -75,9 +69,7 @@ namespace UserPortal.Web.Controllers
             if (!ModelState.IsValid)
                 return View(dto);
 
-            // Check existing identity user by email
-            var existingIdentityUser = await _userManager.FindByEmailAsync(dto.Email);
-            if (existingIdentityUser != null)
+            if (await _userManager.FindByEmailAsync(dto.Email) != null)
             {
                 ModelState.AddModelError(string.Empty, "Email is already registered.");
                 return View(dto);
@@ -90,32 +82,26 @@ namespace UserPortal.Web.Controllers
                 Email = dto.Email
             };
 
-            var identityResult = await _userManager.CreateAsync(appUser, dto.Password);
+            var result = await _userManager.CreateAsync(appUser, dto.Password);
 
-            if (!identityResult.Succeeded)
+            if (!result.Succeeded)
             {
-                foreach (var error in identityResult.Errors)
+                foreach (var error in result.Errors)
                     ModelState.AddModelError(string.Empty, error.Description);
-
                 return View(dto);
             }
 
-            // Map to domain user and persist via UnitOfWork repository
             var domainUser = appUser.ToDomain();
-
+            domainUser.Id = appUser.Id;
             await _unitOfWork.Users.AddAsync(domainUser);
             await _unitOfWork.CommitAsync();
 
-            await _signInManager.SignInAsync(appUser, isPersistent: dto.RememberMe);
-
+            await _signInManager.SignInAsync(appUser, dto.RememberMe);
             return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
-        public ActionResult ForgotPassword()
-        {
-            return View();
-        }
+        public IActionResult ForgotPassword() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -125,41 +111,29 @@ namespace UserPortal.Web.Controllers
                 return View(dto);
 
             var user = await _userManager.FindByEmailAsync(dto.Email);
-            if (user == null)
+            if (user != null)
             {
-                // Do not reveal whether the email exists
-                ViewBag.Message = "If an account exists for that email, a password reset link has been sent.";
-                return View();
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var resetLink = Url.Action("ResetPassword", "Auth", new { token, email = dto.Email }, Request.Scheme);
+                // TODO: send resetLink via email
             }
 
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-            var resetLink = Url.Action("ResetPassword", "Auth", new { token = token, email = dto.Email }, Request.Scheme);
-
-            // TODO: Send `resetLink` to the user's email using your email service.
-            // For now we just show a generic message to the user.
             ViewBag.Message = "If an account exists for that email, a password reset link has been sent.";
-
             return View();
         }
 
-        public ActionResult AccessDenied()
-        {
-            return View();
-        }
+        [HttpGet]
+        public IActionResult AccessDenied() => View();
 
-        public async Task<ActionResult> Logout()
+        public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
-        private IActionResult RedirectToLocal(string? returnUrl)
-        {
-            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                return Redirect(returnUrl);
-
-            return RedirectToAction("Index", "Home");
-        }
+        private IActionResult RedirectToLocal(string? returnUrl) =>
+            !string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)
+                ? Redirect(returnUrl)
+                : RedirectToAction("Index", "Home");
     }
 }

@@ -17,7 +17,7 @@ public static class DatabaseConfig
                 "Please configure it in user secrets, environment variables, or appsettings.json.");
 
         services.AddDbContext<ApplicationDbContext>(opts =>
-            opts.UseSqlite(connectionString));
+            opts.UseSqlServer(connectionString));
 
         return services;
     }
