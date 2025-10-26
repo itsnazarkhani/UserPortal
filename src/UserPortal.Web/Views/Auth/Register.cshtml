@@ -1,5 +1,48 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model RegisterDto
 @{
+    ViewData["Title"] = "Register";
+}
+
+<main id="register-page">
+    <main class="auth-form-container" id="register-container">
+        <header>Register</header>
+        <form asp-action="Register" method="post" id="register-form">
+            <div>
+                <input type="text" class="text-input" id="UserName" name="UserName"
+                       placeholder="Username" value="@Model?.UserName" required />
+            </div>
+
+            <div>
+                <input type="email" class="text-input" id="Email" name="Email"
+                       placeholder="Email" value="@Model?.Email" required />
+            </div>
+
+            <div>
+                <input type="password" class="text-input" id="Password" name="Password"
+                       placeholder="Password" required />
+            </div>
+
+            <label class="checkbox-container">
+                <input type="checkbox" id="RememberMe" name="RememberMe" value="true"
+                       @(Model?.RememberMe == true ? "checked" : "") />
+                <span class="checkmark"></span>
+                Remember me?
+            </label>
+
+            <button type="submit" id="submit">Register</button>
+
+            <div class="auth-links">
+                <a href="/Auth/Login">Already have an account? → Login</a>
+            </div>
+        </form>
+
+        @if (ViewBag.Error != null)
+        {
+            <p style="color:red">@ViewBag.Error</p>
+        }
+    </main>
+</main>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/register.css" asp-append-version="true" />
 }
