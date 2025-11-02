@@ -2,10 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using UserPortal.Core.Entities;
 using UserPortal.Infrastructure.Data.UnitOfWork;
 using UserPortal.Infrastructure.Identity;
-using UserPortal.Infrastructure.Mapping;
 using UserPortal.UseCases.DTOs;
 
 namespace UserPortal.Web.Controllers
@@ -91,9 +89,7 @@ namespace UserPortal.Web.Controllers
                 return View(dto);
             }
 
-            var domainUser = appUser.ToDomain();
-            domainUser.Id = appUser.Id;
-            await _unitOfWork.Users.AddAsync(domainUser);
+            await _unitOfWork.Users.AddAsync(appUser);
             await _unitOfWork.CommitAsync();
 
             await _signInManager.SignInAsync(appUser, dto.RememberMe);

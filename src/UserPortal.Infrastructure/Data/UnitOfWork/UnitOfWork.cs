@@ -1,10 +1,10 @@
-using System;
-using System.ComponentModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using UserPortal.Core.Entities;
+using System;
+using System.ComponentModel;
 using UserPortal.Core.Interfaces;
 using UserPortal.Infrastructure.Data.Repositories;
+using UserPortal.Infrastructure.Identity;
 
 namespace UserPortal.Infrastructure.Data.UnitOfWork;
 
@@ -13,7 +13,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly ApplicationDbContext _context;
     private IDbContextTransaction? _transaction;
 
-    public IRepository<User> Users => new Repository<User>(_context);
+    public IRepository<ApplicationUser> Users => new Repository<ApplicationUser>(_context);
 
     public UnitOfWork(ApplicationDbContext context)
     {

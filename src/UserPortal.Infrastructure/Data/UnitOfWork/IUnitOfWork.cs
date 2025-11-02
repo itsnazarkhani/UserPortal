@@ -1,6 +1,6 @@
 using System;
-using UserPortal.Core.Entities;
 using UserPortal.Core.Interfaces;
+using UserPortal.Infrastructure.Identity;
 
 namespace UserPortal.Infrastructure.Data.UnitOfWork;
 
@@ -13,7 +13,7 @@ public interface IUnitOfWork : IAsyncDisposable, IDisposable
     /// <summary>
     /// Gets the repository for managing user entities.
     /// </summary>
-    IRepository<User> Users { get; }
+    IRepository<ApplicationUser> Users { get; }
 
     /// <summary>
     /// Commits all pending changes to the database within a transaction.

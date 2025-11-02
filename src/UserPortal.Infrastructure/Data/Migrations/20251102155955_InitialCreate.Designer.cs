@@ -9,11 +9,11 @@ using UserPortal.Infrastructure.Data;
 
 #nullable disable
 
-namespace UserPortal.Infrastructure.Migrations
+namespace UserPortal.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251026180744_InitialIdentitySetup")]
-    partial class InitialIdentitySetup
+    [Migration("20251102155955_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -128,47 +128,6 @@ namespace UserPortal.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("UserPortal.Core.Entities.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AvatarId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Email");
-
-                    b.HasIndex("FirstName");
-
-                    b.HasIndex("LastName");
-
-                    b.HasIndex("UserName");
-
-                    b.ToTable("DomainUsers");
-                });
-
             modelBuilder.Entity("UserPortal.Infrastructure.Identity.ApplicationRole", b =>
                 {
                     b.Property<Guid>("Id")
@@ -210,9 +169,6 @@ namespace UserPortal.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DomainUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -249,9 +205,6 @@ namespace UserPortal.Infrastructure.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -265,8 +218,6 @@ namespace UserPortal.Infrastructure.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -320,17 +271,6 @@ namespace UserPortal.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("UserPortal.Infrastructure.Identity.ApplicationUser", b =>
-                {
-                    b.HasOne("UserPortal.Core.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
