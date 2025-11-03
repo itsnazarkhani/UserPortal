@@ -42,3 +42,21 @@
     width: 30px;
     height: 30px;
 }
+
+.nav-avatar {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.avatar-image:hover {
+    opacity: 0.8;
+}

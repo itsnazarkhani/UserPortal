@@ -2,10 +2,10 @@
     <a class="nav-logo" asp-controller="Home" asp-action="Index">
         UserPortal
     </a>
-    @if ((bool)(ViewData["IsLoggedIn"] ?? false))
+    @if (User.Identity?.IsAuthenticated == true)
     {
-        <a class="nav-logo" asp-controller="User" asp-action="Profile">
-            Logged IN
+        <a class="nav-avatar" asp-controller="User" asp-action="Profile">
+            <img src="~/icon/default-avatar.jpg" alt="Profile" class="avatar-image" />
         </a>
     }
     else
@@ -14,7 +14,6 @@
         <a class="nav-logo" id="nav-login-text" asp-controller="Auth" asp-action="Login">
             Login
         </a>
-
         <!-- Icon link for small screens -->
         <a class="nav-logo" id="nav-login-icon" asp-controller="Auth" asp-action="Login">
             <img src="~/icon/login.png" alt="Login" />

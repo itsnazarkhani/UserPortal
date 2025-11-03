@@ -48,7 +48,9 @@ namespace UserPortal.Web.Controllers
             var result = await _signInManager.PasswordSignInAsync(user, dto.Password, dto.RememberMe, true);
 
             if (result.Succeeded)
+            {
                 return RedirectToLocal(returnUrl);
+            }
 
             ViewBag.Error = result.IsLockedOut
                 ? "Account locked. Please try again later."
