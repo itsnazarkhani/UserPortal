@@ -10,5 +10,9 @@ namespace UserPortal.Infrastructure.Identity;
 /// </summary>
 public class ApplicationUser : IdentityUser<Guid>, IEntity
 {
-    
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public Guid AvatarId { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? UpdatedAt { get; set; }
 }
