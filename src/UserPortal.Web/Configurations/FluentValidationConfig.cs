@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using UserPortal.UseCases.Validations.Configurations;
 using UserPortal.UseCases.Validations.DTOs;
 using UserPortal.UseCases.Validations.Rules;
+using UserPortal.Web.Validators;
 
 namespace UserPortal.Web.Configurations;
 
@@ -17,6 +18,7 @@ public static class FluentValidationConfig
 
         // Register all validators from the assembly containing our DTOs
         services.AddValidatorsFromAssemblyContaining<RegisterDtoValidator>();
+        services.AddValidatorsFromAssemblyContaining<AvatarFileUploadValidator>();
 
         return services;
     }
