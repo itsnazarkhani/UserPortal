@@ -1,13 +1,23 @@
 ﻿@model UserPortal.UseCases.DTOs.UserProfileDto
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
 @{
     ViewData["Title"] = "Profile";
-    var avatarUrl = Model.AvatarId == Guid.Empty ?
-         "/icon/default-avatar.jpg" : "/icon/default-avatar.jpg";
+
+    var user = HttpContextAccessor.HttpContext?.User;
+    var avatarId = user?.FindFirst("AvatarId")?.Value;
+    Guid avatarGuid;
+    string avatarUrl;
+    if (Guid.TryParse(avatarId, out avatarGuid) && avatarGuid != Guid.Empty)
+        avatarUrl = $"~/avatars/{avatarGuid}.jpg";
+    else
+        avatarUrl = "~/icon/default-avatar.jpg";
 }
 
 <main id="profile-container">
     <header id="profile-header">
-        <img src="@avatarUrl" alt="Profile" id="profile-avatar" />
+        <img src="@Url.Content(avatarUrl)" alt="Profile" id="profile-avatar" />
         <div id="username-container">
             <h1>@(Model.FirstName) @(Model.LastName)</h1>
             <h2>@@@Model.UserName</h2>

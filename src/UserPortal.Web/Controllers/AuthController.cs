@@ -1,7 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using UserPortal.Infrastructure.Data.UnitOfWork;
 using UserPortal.Infrastructure.Identity;
 using UserPortal.UseCases.DTOs;
@@ -45,10 +46,17 @@ namespace UserPortal.Web.Controllers
                 return View(dto);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user, dto.Password, dto.RememberMe, true);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, true);
 
             if (result.Succeeded)
             {
+                // Sign in with custom claims
+                var claims = new List<Claim>
+                {
+                    new Claim("AvatarId", user.AvatarId.ToString())
+                };
+
+                await _signInManager.SignInWithClaimsAsync(user, dto.RememberMe, claims);
                 return RedirectToLocal(returnUrl);
             }
 
@@ -91,10 +99,13 @@ namespace UserPortal.Web.Controllers
                 return View(dto);
             }
 
-            await _unitOfWork.Users.AddAsync(appUser);
-            await _unitOfWork.CommitAsync();
+            // Sign in with custom claims
+            var claims = new List<Claim>
+            {
+                new Claim("AvatarId", appUser.AvatarId.ToString())
+            };
 
-            await _signInManager.SignInAsync(appUser, dto.RememberMe);
+            await _signInManager.SignInWithClaimsAsync(appUser, dto.RememberMe, claims);
             return RedirectToAction("Index", "Home");
         }
 

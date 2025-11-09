@@ -1,11 +1,25 @@
-﻿<nav class="nav">
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var user = HttpContextAccessor.HttpContext?.User;
+    var avatarId = user?.FindFirst("AvatarId")?.Value;
+    Guid avatarGuid;
+    string avatarPath;
+    if (Guid.TryParse(avatarId, out avatarGuid) && avatarGuid != Guid.Empty)
+        avatarPath = $"~/avatars/{avatarGuid}.jpg";
+    else
+        avatarPath = "~/icon/default-avatar.jpg";
+}
+
+<nav class="nav">
     <a class="nav-logo" asp-controller="Home" asp-action="Index">
         UserPortal
     </a>
     @if (User.Identity?.IsAuthenticated == true)
     {
         <a class="nav-avatar" asp-controller="User" asp-action="Profile">
-            <img src="~/icon/default-avatar.jpg" alt="Profile" class="avatar-image" />
+            <img src="@Url.Content(avatarPath)" alt="Profile" class="avatar-image" />
         </a>
     }
     else
