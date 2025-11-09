@@ -17,8 +17,10 @@ namespace UserPortal.Web.Validators
                 return file.File.FileName.EndsWith(".jpg");
             }).WithMessage("The file extension type is not valid.");
 
-            RuleFor(x => x.File.FileName).Matches(@"^[A-Za-z0-9_\\-.]*$")
+            RuleFor(x => x.File.FileName)
+                .Matches(@"^[A-Za-z0-9_.-]*$")
                 .WithMessage("The file name is not valid.");
+
 
             RuleFor(x => x).Must((file, context) =>
             {

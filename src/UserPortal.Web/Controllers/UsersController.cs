@@ -21,7 +21,7 @@ namespace UserPortal.Web.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        [HttpPost("/{userId:guid}/avatar")]
+        [HttpPost("{userId:guid}/avatar")]
         public async Task<IActionResult> UpdateUserImage(
             Guid userId,
             IFormFile file,
