@@ -1,5 +1,85 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model UserPortal.UseCases.DTOs.UserSettingsDto
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 @{
+    ViewData["Title"] = "Settings";
+    var user = HttpContextAccessor.HttpContext?.User;
+    var avatarId = user?.FindFirst("AvatarId")?.Value;
+    Guid avatarGuid;
+    string avatarUrl;
+    if (Guid.TryParse(avatarId, out avatarGuid) && avatarGuid != Guid.Empty)
+        avatarUrl = $"~/avatars/{avatarGuid}.jpg";
+    else
+        avatarUrl = "~/icon/default-avatar.jpg";
+}
+<main id="settings-container">
+    <header id="settings-header">
+        <h1>User Settings</h1>
+        <p>Update your personal information and avatar.</p>
+    </header>
+    <form asp-action="Settings" asp-controller="User" method="post" enctype="multipart/form-data" class="settings-form">
+        @Html.AntiForgeryToken()
+
+        <div class="avatar-section">
+            @if (Model.AvatarId != Guid.Empty)
+            {
+                <img src="@Url.Content($"~/avatars/{Model.AvatarId}.jpg?v={Model.AvatarId}")"
+                     alt="Current Avatar" id="current-avatar" />
+            }
+            else
+            {
+                <img src="@Url.Content("~/icon/default-avatar.jpg")"
+                     alt="Current Avatar" id="current-avatar" />
+            }
+            <div class="avatar-upload">
+                <label for="Avatar" class="form-label">Change Avatar (Optional)</label>
+                <input asp-for="Avatar" type="file" class="form-control" accept="image/*" />
+                <span asp-validation-for="Avatar" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FirstName" class="form-label">First Name</label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LastName" class="form-label">Last Name</label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UserName" class="form-label">Username</label>
+            <input asp-for="UserName" class="form-control" readonly />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" disabled />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-success mt-3">@ViewBag.Message</div>
+        }
+
+        @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+        {
+            <div class="alert alert-danger mt-3">
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+    </form>
+</main>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

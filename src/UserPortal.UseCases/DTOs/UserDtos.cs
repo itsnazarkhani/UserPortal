@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using System;
 
 namespace UserPortal.UseCases.DTOs;
@@ -27,7 +28,12 @@ public record class UserProfileDto(
     Guid AvatarId
 );
 
-public record class UserListDto(
-    string UserName,
-    Guid AvatarId
-);
+public class UserSettingsDto
+{
+    public string? UserName { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? Email { get; set; }
+    public IFormFile? Avatar { get; set; }
+    public Guid AvatarId { get; set; }
+}

@@ -1,0 +1,298 @@
+/* Settings Container */
+#settings-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    color: var(--color-white);
+    min-height: calc(100vh - 70px);
+}
+
+/* Settings Header */
+#settings-header {
+    margin-bottom: 40px;
+    padding: 30px;
+    background: rgba(44, 172, 211, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(44, 172, 211, 0.2);
+}
+
+    #settings-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--color-white);
+    }
+
+    #settings-header p {
+        color: #c6c6c6;
+        font-size: 1.1rem;
+        font-weight: 400;
+    }
+
+/* Settings Form */
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Avatar Section */
+.avatar-section {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+#current-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-primary);
+    box-shadow: 0 4px 15px rgba(44, 172, 211, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    #current-avatar:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(44, 172, 211, 0.4);
+    }
+
+.avatar-upload {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+    .avatar-upload .form-label {
+        display: block;
+        font-size: 0.85rem;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .avatar-upload .form-control {
+        width: 100%;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        color: var(--color-white);
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+        .avatar-upload .form-control:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(44, 172, 211, 0.3);
+        }
+
+        .avatar-upload .form-control:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(44, 172, 211, 0.1);
+        }
+
+        .avatar-upload .form-control::file-selector-button {
+            padding: 8px 16px;
+            background: rgba(44, 172, 211, 0.1);
+            border: 1px solid rgba(44, 172, 211, 0.5);
+            border-radius: 6px;
+            color: var(--color-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 12px;
+        }
+
+            .avatar-upload .form-control::file-selector-button:hover {
+                background: rgba(44, 172, 211, 0.2);
+                border-color: var(--color-primary);
+            }
+
+/* Form Groups */
+.form-group {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-label {
+    font-size: 0.85rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: var(--color-white);
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+}
+
+    .form-control:hover:not(:disabled):not([readonly]) {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(44, 172, 211, 0.3);
+    }
+
+    .form-control:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(44, 172, 211, 0.1);
+    }
+
+    .form-control:disabled,
+    .form-control[readonly] {
+        background: rgba(255, 255, 255, 0.02);
+        border-color: rgba(255, 255, 255, 0.05);
+        color: #666;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+/* Validation Messages */
+.text-danger {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin-top: 6px;
+    display: block;
+}
+
+/* Submit Button */
+.btn-primary {
+    width: 100%;
+    padding: 16px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-white);
+    background: linear-gradient(135deg, var(--color-primary), #2296b8);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(44, 172, 211, 0.3);
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #33b8e0, var(--color-primary));
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(44, 172, 211, 0.4);
+    }
+
+    .btn-primary:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 10px rgba(44, 172, 211, 0.3);
+    }
+
+/* Alert Messages */
+.alert {
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    margin-top: 20px;
+    animation: slideIn 0.3s ease;
+}
+
+.alert-success {
+    background: rgba(76, 175, 80, 0.1);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    color: #81c784;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #settings-container {
+        padding: 20px 15px;
+    }
+
+    #settings-header {
+        padding: 25px 20px;
+    }
+
+        #settings-header h1 {
+            font-size: 1.6rem;
+        }
+
+        #settings-header p {
+            font-size: 1rem;
+        }
+
+    .avatar-section {
+        padding: 30px 20px;
+    }
+
+    #current-avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .form-group {
+        padding: 20px;
+    }
+
+    .btn-primary {
+        padding: 14px 20px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #settings-header h1 {
+        font-size: 1.4rem;
+    }
+
+    #current-avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .avatar-section {
+        padding: 25px 15px;
+    }
+
+    .form-group {
+        padding: 16px;
+    }
+
+    .btn-primary {
+        padding: 12px 18px;
+        font-size: 0.9rem;
+    }
+}
