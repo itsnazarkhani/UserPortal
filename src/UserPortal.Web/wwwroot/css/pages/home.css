@@ -1,95 +1,301 @@
-body {
-    background-color: var(--color-black);
-    margin: 0;
+/* Utility Classes */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-.landing-container {
+/* Glassmorphism Card Style (used for features and main sections) */
+.glass-card {
+    background: rgba(44, 172, 211, 0.05); /* Light primary tinted background */
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(44, 172, 211, 0.2);
+    padding: 30px;
+    transition: all 0.3s ease;
+}
+
+    .glass-card:hover {
+        border-color: var(--color-primary);
+        box-shadow: 0 8px 30px rgba(44, 172, 211, 0.2);
+        transform: translateY(-3px);
+    }
+
+
+
+/* ==========================================================
+        HEADER & NAVIGATION
+        ========================================================== */
+#navbar {
+    background: rgba(30, 30, 48, 0.8);
+    backdrop-filter: blur(15px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 15px 0;
+}
+
+    #navbar .nav-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+.logo {
+    font-family: var(--font-prosto);
+    font-size: 1.8rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    letter-spacing: -1px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-link {
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 5px 0;
     position: relative;
-    overflow: hidden;
-    height: calc(100vh - 70px);
-    width: 100%;
-    background-image: url("~/img/glowing-portal.jpg");
-    background-size: cover;
-    background-position: 20% 10%;
-    background-repeat: no-repeat;
 }
 
-.landing-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-120%, -50%);
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--color-primary);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+.nav-actions {
+    display: flex;
+    gap: 15px;
+}
+
+/* ==========================================================
+        HERO SECTION
+        ========================================================== */
+#hero {
+    padding: 120px 0;
     text-align: center;
-    color: var(--color-white);
+    background: radial-gradient(circle at top, rgba(44, 172, 211, 0.05), transparent 70%);
+}
+
+.hero-headline {
+    font-family: var(--font-prosto);
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.1;
+    background: linear-gradient(45deg, var(--color-primary), var(--color-white));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subheadline {
+    font-size: 1.35rem;
+    color: var(--color-text-muted);
+    max-width: 800px;
+    margin: 0 auto 40px;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 50%;
+    margin: 0 auto;
+}
+
+/* Glass Preview Box */
+.glass-preview {
+    max-width: 900px;
+    height: 400px;
+    margin: 60px auto 0;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+    /* Re-using the glass card style */
+    background: rgba(163, 52, 107, 0.05); /* Secondary tinted background */
+    border: 1px solid rgba(163, 52, 107, 0.2);
+    box-shadow: 0 10px 40px rgba(163, 52, 107, 0.2);
+    overflow: hidden;
+}
+
+.glass-preview-text {
+    color: var(--color-text-light);
+    font-size: 1.8rem;
+    font-weight: 600;
+    opacity: 0.8;
+    z-index: 1;
+}
+
+/* ==========================================================
+        FEATURES SECTION
+        ========================================================== */
+#features {
+    padding: 80px 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+    .section-header h2 {
+        font-size: 2.5rem;
+        color: var(--color-primary);
+        font-family: var(--font-prosto);
+        margin-bottom: 15px;
+    }
+
+    .section-header p {
+        font-size: 1.1rem;
+        color: var(--color-text-muted);
+    }
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
     display: flex;
     flex-direction: column;
-    align-items: start;
-    gap: 20px;
+    gap: 15px;
+    height: 100%; /* Ensure cards are same height */
+}
+
+.feature-icon-container {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-dark-bg);
+    margin-bottom: 10px;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    color: var(--color-white);
+    font-weight: 700;
+}
+
+.feature-card p {
+    color: var(--color-text-muted);
+}
+
+/* ==========================================================
+        FOOTER
+        ========================================================== */
+#footer {
+    margin-top: auto;
+    padding: 40px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+}
+
+.footer-links {
+    margin-bottom: 15px;
+}
+
+.footer-link {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+    .footer-link:hover {
+        color: var(--color-primary);
+    }
+
+/* ==========================================================
+        RESPONSIVENESS (Adapted from user's theme media queries)
+        ========================================================== */
+@media (max-width: 1024px) {
+    .hero-headline {
+        font-size: 3rem;
+    }
 }
 
 @media (max-width: 768px) {
-    .landing-container {
-        position: relative;
-        overflow: hidden;
+    #navbar .nav-content {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .nav-links {
+        display: none; /* Hide links on mobile for simplicity */
+    }
+
+    .nav-actions {
         width: 100%;
-        height: calc(100vh-70px);
-        background-image: url("~/img/glowing-portal.jpg");
-        background-size: cover;
-        /* ensure it covers container */
-        background-position: center;
-        display: flex;
-        flex-flow: column;
-        align-items: center;
-        /* center the image */
-        background-repeat: no-repeat;
+        justify-content: center;
     }
 
-    .landing-overlay {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        /* perfectly center */
-        display: flex;
+    #hero {
+        padding: 80px 0;
+    }
+
+    .hero-headline {
+        font-size: 2.5rem;
+    }
+
+    .hero-subheadline {
+        font-size: 1.1rem;
+    }
+
+    .hero-actions {
         flex-direction: column;
-        /* stack items vertically */
-        align-items: center;
-        /* horizontal centering */
-        text-align: center;
-        /* center text */
+        gap: 15px;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .glass-preview {
+        height: 300px;
+        margin-top: 40px;
+    }
+
+    #features {
+        padding: 60px 0;
+    }
+
+    .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
     }
 }
 
-.btn-glass {
-    margin-top: 10px;
-    font-size: 0.9rem;
-    padding: 15px 25px;
-    font-size: 1rem;
-    color: var(--color-white);
-    text-decoration: none;
-    border-radius: 12px;
-    background: rgba(44, 172, 211, 0.5);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(44, 172, 211, 1);
-    transition: 0.3s;
-}
-
-.btn-glass:hover {
-    background: rgba(44, 172, 211, 1);
-    border-color: rgba(44, 172, 211, 1);
-}
-
-.landing-text {
-    font-size: 3rem;
-    text-align: start;
-}
-
-.landing-img {
-    transform: translate(25%, 5%);
-}
-
-.lnading-text-container {
-    display: flex;
-    justify-content: start;
-    text-align: start;
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.5rem;
+    }
 }

@@ -6,3 +6,13 @@
     box-sizing: border-box;
     font-family: var(--font-primary);
 }
+
+body {
+    background: var(--color-black);
+    color: var(--color-white);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}

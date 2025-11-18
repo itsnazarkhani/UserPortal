@@ -12,25 +12,40 @@
         avatarPath = "~/icon/default-avatar.jpg";
 }
 
-<nav class="nav">
-    <a class="nav-logo" asp-controller="Home" asp-action="Index">
-        UserPortal
-    </a>
-    @if (User.Identity?.IsAuthenticated == true)
-    {
-        <a class="nav-avatar" asp-controller="User" asp-action="Profile">
-            <img src="@Url.Content(avatarPath)" alt="Profile" class="avatar-image" />
+<nav id="navbar">
+    <div class="container nav-content">
+        <a class="logo" asp-controller="Home" asp-action="Index">
+            UserPortal
         </a>
-    }
-    else
-    {
-        <!-- Text link for desktop -->
-        <a class="nav-logo" id="nav-login-text" asp-controller="Auth" asp-action="Login">
-            Login
-        </a>
-        <!-- Icon link for small screens -->
-        <a class="nav-logo" id="nav-login-icon" asp-controller="Auth" asp-action="Login">
-            <img src="~/icon/login.png" alt="Login" />
-        </a>
-    }
+
+        <div class="nav-links">
+            <a href="@Url.Action("Index", "Home")#features" class="nav-link">Features</a>
+            <a href="@Url.Action("Index", "Home")#about" class="nav-link">About Us</a>
+        </div>
+
+        <div class="nav-actions">
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a class="nav-avatar" asp-controller="User" asp-action="Profile">
+                    <img src="@Url.Content(avatarPath)" alt="Profile" class="avatar-image" />
+                </a>
+            }
+            else
+            {
+                <!-- Text link for desktop -->
+                <div class="nav-text-actions">
+                    <a class="btn btn-secondary" id="nav-login-text" asp-controller="Auth" asp-action="Login">
+                        Login
+                    </a>
+                    <a class="btn btn-primary" id="nav-register-text" asp-controller="Auth" asp-action="Register">
+                        Sign Up
+                    </a>
+                </div>
+                <!-- Icon link for small screens -->
+                <a class="nav-logo" id="nav-login-icon" asp-controller="Auth" asp-action="Login">
+                    <img src="~/icon/login.png" alt="Login" />
+                </a>
+            }
+        </div>
+    </div>
 </nav>
