@@ -296,3 +296,16 @@
         font-size: 0.9rem;
     }
 }
+
+.btn-primary:disabled {
+    background: #777 !important;
+    border: none !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none !important;
+}
+
+.btn.disabled,
+.btn:disabled {
+    opacity: .65;
+}

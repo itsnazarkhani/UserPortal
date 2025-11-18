@@ -33,34 +33,34 @@
             }
             <div class="avatar-upload">
                 <label for="Avatar" class="form-label">Change Avatar (Optional)</label>
-                <input asp-for="Avatar" type="file" class="form-control" accept="image/*" />
+                <input asp-for="Avatar" type="file" class="form-control" accept="image/*" id="Avatar" />
                 <span asp-validation-for="Avatar" class="text-danger"></span>
             </div>
         </div>
 
         <div class="form-group">
-            <label asp-for="FirstName" class="form-label">First Name</label>
+            <label asp-for="FirstName" class="form-label" id="FirstName">First Name</label>
             <input asp-for="FirstName" class="form-control" />
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="LastName" class="form-label">Last Name</label>
+            <label asp-for="LastName" class="form-label" id="LastName">Last Name</label>
             <input asp-for="LastName" class="form-control" />
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="UserName" class="form-label">Username</label>
+            <label asp-for="UserName" class="form-label" id="UserName">Username</label>
             <input asp-for="UserName" class="form-control" readonly />
         </div>
 
         <div class="form-group">
-            <label asp-for="Email" class="form-label">Email</label>
+            <label asp-for="Email" class="form-label" id="Email">Email</label>
             <input asp-for="Email" class="form-control" disabled />
         </div>
 
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="submit" class="btn btn-primary" id="save-btn" disabled>Save Changes</button>
 
         @if (ViewBag.Message != null)
         {
@@ -84,6 +84,63 @@
     <partial name="_ValidationScriptsPartial" />
 
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+                    const saveBtn = document.getElementById("save-btn");
+
+                    // Fields to track
+                    const fields = [
+                        "FirstName",
+                        "LastName",
+                        "UserName",
+                        "Email",
+                    ];
+
+                    const initialValues = {};
+
+                    // Save initial input values
+                    fields.forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) initialValues[id] = el.value;
+                    });
+
+                    // Track avatar (file input)
+                    let avatarChanged = false;
+
+                    const avatarInput = document.getElementById("Avatar");
+                    avatarInput.addEventListener("change", function () {
+                        avatarChanged = this.files.length > 0;
+                        checkForChanges();
+                    });
+
+                    // Check text fields
+                    fields.forEach(id => {
+                        const el = document.getElementById(id);
+                        if (!el) return;
+
+                        el.addEventListener("input", checkForChanges);
+                    });
+
+                    // Check if any change happened
+                    function checkForChanges() {
+                        let changed = false;
+
+                        // Check text inputs
+                        fields.forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el && el.value !== initialValues[id]) {
+                                changed = true;
+                            }
+                        });
+
+                        // Check avatar
+                        if (avatarChanged) changed = true;
+
+                        // Enable or disable button
+                        saveBtn.disabled = !changed;
+                    }
+                });
+
         document.addEventListener("DOMContentLoaded", function () {
             const fileInput = document.getElementById("Avatar");
             const previewImg = document.getElementById("current-avatar");
