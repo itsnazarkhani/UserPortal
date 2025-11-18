@@ -134,7 +134,7 @@ namespace UserPortal.Web.Controllers
             {
                 TempData["Message"] = "Settings updated successfully.";
 
-                return RedirectToAction(nameof(Settings));
+                return RedirectToAction(nameof(Profile));
             }
 
             // Add any identity errors to ModelState
